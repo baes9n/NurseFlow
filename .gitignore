@@ -1,0 +1,10 @@
+.env
+**/.env
+**/node_modules/
+**/target/
+**/dist/
+**/.angular/
+**/backups/
+**/evidence/
+**/screenshots/
+*.sql.gz

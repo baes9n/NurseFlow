@@ -1,0 +1,21 @@
+name: nurseflow
+services:
+  postgres:
+    image: postgres:16
+    container_name: nurseflow-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-nurseflow}
+      POSTGRES_USER: ${DB_USERNAME:-nurseflow}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Falta DB_PASSWORD en .env}
+    ports:
+      - "127.0.0.1:${DB_PORT:-5441}:5432"
+    volumes:
+      - nurseflow_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+volumes:
+  nurseflow_postgres_data:
